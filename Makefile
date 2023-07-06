@@ -1,7 +1,3 @@
-## TODO:
-#1. setup everything
-#3. dockerfile for application image
-
 IMAGE_REPO ?= fnuarnav
 IMAGE_NAME ?= dapr-example-http
 IMAGE_TAG ?= test
@@ -21,6 +17,7 @@ docker-image-push:
 
 
 create-container-group: setup
+	echo creating container group $(CONTAINER_GROUP_NAME) in resource group $(RESOURCE_GROUP)
 	curl -X PUT \
 		"https://management.azure.com/subscriptions/$(SUBSCRIPTION_ID)/resourcegroups/$(RESOURCE_GROUP)/providers/Microsoft.ContainerInstance/containerGroups/$(CONTAINER_GROUP_NAME)?api-version=2023-05-01" \
 		-H "Authorization: Bearer `az account get-access-token --query "accessToken" -o tsv`" \
