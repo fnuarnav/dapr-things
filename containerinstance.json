@@ -1,0 +1,77 @@
+{
+	"location": "eastus2euap",
+	"name": "CONTAINER_GROUP_NAME",
+	"properties": {
+		"sku": "Standard",
+		"containers": [
+		{
+			"name": "daprcontainer" ,
+			"properties": {
+				"image": "daprio/daprd:latest",
+				"command": [
+					"./daprd",
+					"--app-id",
+					"daprapp",
+					"--resources-path",
+					"/mount/resources"
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				},
+				"volumeMounts": [
+					{
+						"name": "resources",
+						"mountPath": "/mount/resources",
+						"readOnly": false
+					}
+				] 
+			}
+		},
+			
+		{
+			"name": "jobcontainer" ,
+			"properties": {
+				"image": "fnuarnav/dapr-example-http:latest",
+				"command": [
+					"./order_processor_example"
+				],
+				"environmentVariables": [
+					{
+						"name": "STATE_STORE_NAME",
+						"value": "azureblobstatestore" 
+					}
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				}
+			}
+		}
+		],
+
+		"volumes": [
+			{
+				"name": "resources",
+				"azureFile": {
+					"shareName": "STORAGE_SHARE_NAME",
+					"storageAccountName": "STORAGE_ACCOUNT_NAME",
+					"storageAccountKey": "STORAGE_ACCOUNT_KEY"
+				}
+			}
+		], 
+		"osType": "Linux"
+	},
+	"identity": {
+		"type": "UserAssigned",
+		"userAssignedIdentities": {
+			"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourcegroups/arnav-vk-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/arnav-container-group-identity" : {}
+		}
+	}
+}
+
+
