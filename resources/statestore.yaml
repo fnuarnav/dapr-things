@@ -1,0 +1,16 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azureblobstatestore
+spec:
+  type: state.azure.blobstorage
+  version: v1
+  metadata:
+  - name: accountName
+    value: "arnavteststorageaccount"
+  - name: accountKey
+    value: "STORAGE_ACCOUNT_KEY"
+  - name: containerName 
+    value: "daprcontainer"
+  - name: azureClientId
+    value: "MANAGED_IDENTITY_CLIENT_ID"
