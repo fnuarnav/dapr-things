@@ -7,10 +7,30 @@ spec:
   version: v1
   metadata:
   - name: accountName
-    value: "arnavteststorageaccount"
+    value: "STORAGE_ACCOUNT_NAME"
   - name: accountKey
     value: "STORAGE_ACCOUNT_KEY"
   - name: containerName 
-    value: "daprcontainer"
+    value: "CONTAINER_NAME"
   - name: azureClientId
     value: "MANAGED_IDENTITY_CLIENT_ID"
+
+---
+
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azurecosmosdbstatestore
+spec:
+  type: state.azure.cosmosdb
+  initTimeout: 5m
+  version: v1
+  metadata:
+  - name: url
+    value: "COSMOSDB_URI"
+  - name: masterKey
+    value: "MASTER_KEY"
+  - name: database
+    value: "DATABASE_NAME"
+  - name: collection
+    value: "COLLECTION_NAME"

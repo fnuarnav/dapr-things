@@ -2,8 +2,8 @@
 
 This repository contains examples of using DAPR with Azure Container Instances. Currently The examples focus on using DAPR with Azure backend components.
 The demo includes:
-1. State management with AzureBlobStorage
-
+1. State management with Azure Blob Storage backend
+2. State management with Azure Cosmos DB Backend
 
 ## Instruction
 The demo requires that the DAPR resources files be uploaded to an Azure File Share that is mounted on the DAPR container. By default this example will use the test storage account `arnavteststorageaccount`.

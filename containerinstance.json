@@ -51,6 +51,27 @@
 					}
 				}
 			}
+		},
+		{
+			"name": "jobcontainer-cosmosdb" ,
+			"properties": {
+				"image": "fnuarnav/dapr-example-http:latest",
+				"command": [
+					"./order_processor_example"
+				],
+				"environmentVariables": [
+					{
+						"name": "STATE_STORE_NAME",
+						"value": "azurecosmosdbstatestore"
+					}
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				}
+			}
 		}
 		],
 
