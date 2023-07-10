@@ -30,7 +30,26 @@
 				] 
 			}
 		},
-			
+		{
+			"name": "redis-container" ,
+			"properties": {
+				"image": "redis:latest",
+				"command": [
+					"redis-server",
+					"--save",
+					"60",
+					"1",
+					"--loglevel",
+					"warning"
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				}
+			}
+		},
 		{
 			"name": "jobcontainer" ,
 			"properties": {
@@ -63,6 +82,27 @@
 					{
 						"name": "STATE_STORE_NAME",
 						"value": "azurecosmosdbstatestore"
+					}
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				}
+			}
+		},
+		{
+			"name": "jobcontainer-redis" ,
+			"properties": {
+				"image": "fnuarnav/dapr-example-http:latest",
+				"command": [
+					"./order_processor_example"
+				],
+				"environmentVariables": [
+					{
+						"name": "STATE_STORE_NAME",
+						"value": "redisstatestore"
 					}
 				],
 				"resources": {
