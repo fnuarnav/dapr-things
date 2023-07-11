@@ -1,0 +1,12 @@
+apiVersion: daprio/v1alpha1
+kind: Component
+metadata:
+  name: daprAzureKV
+spec:
+  type: secretstores.azure.keyvault
+  version: v1
+  metadata: 
+  - name: vaultName
+    value: "arnavtestkeyvault"  
+  - name: azureClientId
+    value: "f7c81427-2b56-4037-96aa-bf16f78b84da" 

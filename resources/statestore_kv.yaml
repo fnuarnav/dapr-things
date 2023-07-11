@@ -1,0 +1,59 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azureblobstatestore
+spec:
+  type: state.azure.blobstorage
+  version: v1
+  metadata:
+  - name: accountName
+    value: "arnavteststorageaccount"
+  - name: containerName 
+    value: "daprcontainer"
+  - name: accountKey
+    secretKeyRef:
+      name: storage-account-key
+      key: storage-account-key  
+auth:
+  secretStore: daprAzureKV  
+---
+
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azurecosmosdbstatestore
+spec:
+  type: state.azure.cosmosdb
+  initTimeout: 5m  
+  version: v1
+  metadata:
+  - name: url 
+    value: "https://arnavtestcosmosdb.documents.azure.com:443/"
+  - name: database 
+    value: "DaprStateStore"
+  - name: collection 
+    value: "StateCollection"
+  - name: masterKey
+    secretKeyRef:
+      name: cosmosdb-master-key
+      key: cosmosdb-master-key  
+auth:
+  secretStore: daprAzureKV  
+---
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azureredisstatestore
+spec:
+  type: state.redis
+  version: v1
+  initTimeout: 5m  
+  metadata:
+  - name: redisHost 
+    value: daprredistest.redis.cache.windows.net:6379 
+  - name: redisPassword
+    secretKeyRef:
+      name: azure-redis-password
+      key: azure-redis-password  
+auth:
+  secretStore: daprAzureKV
