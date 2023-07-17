@@ -1,0 +1,75 @@
+{
+	"location": "eastus2euap",
+	"name": "order-processor-service",
+	"properties": {
+		"sku": "Standard",
+		"containers": [
+		{
+			"name": "daprcontainer" ,
+			"properties": {
+				"image": "daprio/daprd:latest",
+				"command": [
+					"./daprd",
+					"--app-id",
+					"order-processor",
+					"--app-port",
+					"6006",
+					"--app-protocol",
+					"http",
+					"--dapr-http-port",
+					"3501",
+					"--config",
+					"/mount/resources/consul_config.yaml"
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				},
+				"volumeMounts": [
+					{
+						"name": "resources",
+						"mountPath": "/mount/resources",
+						"readOnly": false
+					}
+				] 
+			}
+		},
+		{
+			"name": "order-processor" ,
+			"properties": {
+				"image": "fnuarnav/dapr-service-test:order-processor",
+				"command": [
+					"./order_processor_example"
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				}
+			}
+		}
+		], 
+		"volumes": [
+			{
+				"name": "resources",
+				"azureFile": {
+					"shareName": "arnavdaprconsulstorageshare",
+					"storageAccountName": "STORAGE_ACCOUNT_NAME",
+					"storageAccountKey": "STORAGE_ACCOUNT_KEY"
+				}
+			}
+		], 
+		"osType": "Linux",
+		"subnetIds": [
+			{
+				"id": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/arnav-vk-test-rg/providers/Microsoft.Network/virtualNetworks/arnavvktestrgvnet903/subnets/virtual-node-aci"
+			}
+		]
+	}
+	}
+}
+
+

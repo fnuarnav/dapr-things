@@ -1,0 +1,30 @@
+{
+	"location": "eastus2euap",
+	"name": "consul-server",
+	"properties": {
+		"sku": "Standard",
+		"containers": [
+		{
+			"name": "consul" ,
+			"properties": {
+				"image": "consul:1.15.4",
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				}
+			}
+		}
+		], 
+		"osType": "Linux",
+		"subnetIds": [
+			{
+				"id": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/arnav-vk-test-rg/providers/Microsoft.Network/virtualNetworks/arnavvktestrgvnet903/subnets/virtual-node-aci"
+			}
+		]
+	}
+	}
+}
+
+

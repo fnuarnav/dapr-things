@@ -1,0 +1,11 @@
+apiVersion: dapr.io/v1alpha1
+kind: Configuration
+metadata:
+  name: appconfig
+spec:
+  nameResolution:
+    component: "consul"
+    configuration:
+      selfRegister: true
+      client:
+        address: "10.241.0.11:8500"

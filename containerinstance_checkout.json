@@ -1,0 +1,70 @@
+{
+	"location": "eastus2euap",
+	"name": "checkout-service",
+	"properties": {
+		"sku": "Standard",
+		"containers": [
+		{
+			"name": "daprcontainer" ,
+			"properties": {
+				"image": "daprio/daprd:latest",
+				"command": [
+					"./daprd",
+					"--app-id",
+					"chneckout",
+					"--dapr-http-port",
+					"3500",
+					"--config",
+					"/mount/resources/consul_config.yaml"
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				},
+				"volumeMounts": [
+					{
+						"name": "resources",
+						"mountPath": "/mount/resources",
+						"readOnly": false
+					}
+				] 
+			}
+		},
+		{
+			"name": "checkout" ,
+			"properties": {
+				"image": "fnuarnav/dapr-service-test:checkout",
+				"command": [
+					"./checkout_example"
+				],
+				"resources": {
+					"requests": {
+						"memoryInGb": 1,
+						"cpu": 1
+					}
+				}
+			}
+		}
+		], 
+		"volumes": [
+			{
+				"name": "resources",
+				"azureFile": {
+					"shareName": "arnavdaprconsulstorageshare",
+					"storageAccountName": "STORAGE_ACCOUNT_NAME",
+					"storageAccountKey": "STORAGE_ACCOUNT_KEY"
+				}
+			}
+		], 
+		"osType": "Linux",
+		"subnetIds": [
+			{
+				"id": "/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourceGroups/arnav-vk-test-rg/providers/Microsoft.Network/virtualNetworks/arnavvktestrgvnet903/subnets/virtual-node-aci"
+			}
+		]
+	}
+}
+
+
