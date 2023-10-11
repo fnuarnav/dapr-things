@@ -5,53 +5,7 @@
 		"sku": "Standard",
 		"containers": [
 		{
-			"name": "daprcontainer" ,
-			"properties": {
-				"image": "daprio/daprd:latest",
-				"command": [
-					"./daprd",
-					"--app-id",
-					"daprapp",
-					"--resources-path",
-					"/mount/resources"
-				],
-				"resources": {
-					"requests": {
-						"memoryInGb": 1,
-						"cpu": 1
-					}
-				},
-				"volumeMounts": [
-					{
-						"name": "resources",
-						"mountPath": "/mount/resources",
-						"readOnly": false
-					}
-				] 
-			}
-		},
-		{
-			"name": "redis-container" ,
-			"properties": {
-				"image": "redis:latest",
-				"command": [
-					"redis-server",
-					"--save",
-					"60",
-					"1",
-					"--loglevel",
-					"warning"
-				],
-				"resources": {
-					"requests": {
-						"memoryInGb": 1,
-						"cpu": 1
-					}
-				}
-			}
-		},
-		{
-			"name": "jobcontainer" ,
+			"name": "jobcontainer-azblob" ,
 			"properties": {
 				"image": "fnuarnav/dapr-example-http:latest",
 				"command": [
@@ -102,7 +56,7 @@
 				"environmentVariables": [
 					{
 						"name": "STATE_STORE_NAME",
-						"value": "redisstatestore"
+						"value": "azureredisstatestore"
 					}
 				],
 				"resources": {
@@ -114,7 +68,19 @@
 			}
 		}
 		],
-
+		"extensions": [
+		  {
+    	    "name": "DaprExtension",
+    	    "properties": {
+    	      "extensionType": "dapr",
+    	      "version": "1.0",
+    	      "settings": {
+    	        "resourceVolumeName": "resources",
+    	        "appId": "dapr-statestore-app"
+    	      }
+    	    }
+    	  }
+    	],
 		"volumes": [
 			{
 				"name": "resources",
@@ -130,7 +96,7 @@
 	"identity": {
 		"type": "UserAssigned",
 		"userAssignedIdentities": {
-			"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourcegroups/arnav-vk-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/arnav-container-group-identity" : {}
+			"/subscriptions/da28f5e5-aa45-46fe-90c8-053ca49ab4b5/resourcegroups/arnav-vk-test-rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/arnav-container-group-identity-2" : {}
 		}
 	}
 }
